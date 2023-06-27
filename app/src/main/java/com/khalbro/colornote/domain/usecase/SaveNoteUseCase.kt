@@ -5,9 +5,8 @@ import com.khalbro.colornote.domain.repository.InfoNoteRepository
 
 class SaveNoteUseCase(private val infoNoteRepository: InfoNoteRepository) {
 
-    fun execute(infoNote: InfoNote): Boolean {
+    suspend operator fun invoke(infoNote: InfoNote) {
 
-        return infoNoteRepository.saveInfoNote(saveInfoNote = infoNote)
-
+        infoNoteRepository.saveInfoNote(saveInfoNote = infoNote)
     }
 }

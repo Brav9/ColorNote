@@ -1,23 +1,18 @@
 package com.khalbro.colornote.domain.repository
 
+import androidx.lifecycle.LiveData
+import com.khalbro.colornote.data.local.entity.Note
 import com.khalbro.colornote.domain.models.InfoNote
 
 interface InfoNoteRepository {
 
-    fun saveInfoNote(saveInfoNote: InfoNote): Boolean
+    suspend fun saveInfoNote(saveInfoNote: InfoNote)
 
-    fun addInfoNote()
+    suspend fun deleteInfoNote(id: Long)
 
-    fun closeInfoNote()
+    fun getAllNotesInfoNote(): LiveData<List<Note>>
 
-    fun deleteInfoNote()
-
-    fun editInfoNote()
-
-    fun showInfoNote()
-
-    fun loadInfoNote(): InfoNote
-
-    fun uploadInfoNotes()
+    suspend fun getNoteById(id: Long): InfoNote?
 
 }
+

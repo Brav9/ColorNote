@@ -2,6 +2,7 @@
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/noteMaterialCardView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
@@ -13,7 +14,7 @@
         android:layout_height="wrap_content"
         android:background="@color/material_dynamic_neutral90">
 
-        <ImageView
+        <View
             android:id="@+id/ivVerticalLineNote"
             android:layout_width="18dp"
             android:layout_height="70dp"
@@ -27,10 +28,23 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:text="ololololo"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/ivVerticalLineNote"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/tvNoteTitleText"
+            tools:text="ololololo" />
+
+        <TextView
+            android:id="@+id/tvNoteTitleText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@+id/ivVerticalLineNote"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="ololololo" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </com.google.android.material.card.MaterialCardView>

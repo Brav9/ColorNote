@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presentation.fragments.EditNoteFragment">
+    tools:context=".presentation.editnote.EditNoteFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <com.google.android.material.card.MaterialCardView
@@ -13,7 +13,7 @@
         android:layout_height="0dp"
         android:layout_margin="16dp"
         app:cardCornerRadius="16dp"
-        app:layout_constraintBottom_toTopOf="@+id/button"
+        app:layout_constraintBottom_toTopOf="@+id/btnSaveNote"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -23,7 +23,7 @@
             android:layout_height="match_parent"
             android:background="@color/material_dynamic_neutral90">
 
-            <ImageView
+            <View
                 android:id="@+id/ivVerticalLine"
                 android:layout_width="18dp"
                 android:layout_height="match_parent"
@@ -33,12 +33,27 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <EditText
+                android:id="@+id/etTitle"
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
+                android:textStyle="bold"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
-                android:layout_marginBottom="16dp"
+                android:background="@null"
+                android:text="ololololololololo"
+                app:layout_constraintBottom_toTopOf="@+id/etText"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/ivVerticalLine"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <EditText
+                android:id="@+id/etText"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
                 android:background="@null"
                 android:gravity="start|top"
                 android:inputType="textMultiLine"
@@ -46,14 +61,14 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/ivVerticalLine"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toBottomOf="@+id/etTitle" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </com.google.android.material.card.MaterialCardView>
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/btnSaveNote"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginStart="16dp"
