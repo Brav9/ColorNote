@@ -1,62 +1,102 @@
 package com.khalbro.colornote.presentation.allnotes
 
+import android.content.Intent
+import android.icu.text.Transliterator.Position
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
+import androidx.core.os.bundleOf
+import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
+import androidx.fragment.app.ListFragment
+import androidx.fragment.app.setFragmentResult
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.NavController
 import androidx.navigation.Navigation
-import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
+import com.google.android.material.tabs.TabLayout.TabGravity
 import com.khalbro.colornote.R
-import com.khalbro.colornote.data.repository.InfoNoteRepositoryImpl
 import com.khalbro.colornote.databinding.FragmentNotesBinding
-import com.khalbro.colornote.domain.usecase.DeleteNoteUseCase
-import com.khalbro.colornote.domain.usecase.GetAllNotesUseCase
-import com.khalbro.colornote.domain.usecase.GetNoteByIdUseCase
+import com.khalbro.colornote.domain.models.InfoNote
+import com.khalbro.colornote.presentation.editnote.EditNoteFragment
 
-class NotesFragment : Fragment() {
+class NotesFragment : Fragment(), NotesAdapter.OnClickListener {
 
-    private lateinit var infoNoteRepository: InfoNoteRepositoryImpl
-    private val getAllNotesUseCase by lazy { GetAllNotesUseCase(infoNoteRepository = infoNoteRepository) }
-    private val getNoteByIdUseCase by lazy { GetNoteByIdUseCase(infoNoteRepository = infoNoteRepository) }
-    private val deleteNoteUseCase by lazy { DeleteNoteUseCase(infoNoteRepository = infoNoteRepository) }
     private var _binding: FragmentNotesBinding? = null
+    private val binding get() = _binding!!
     private lateinit var notesViewModel: NotesViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_notes, container, false)
+        Log.d("Ololo", "onCreateView: $inflater")
+        _binding = FragmentNotesBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val binding = FragmentNotesBinding.bind(view)
-        _binding = binding
         notesViewModel = ViewModelProvider(this)[NotesViewModel::class.java]
+        Log.d("Ololo", "onViewCreated: 01")
 
-        val adapter = activity?.applicationContext?.let { NotesAdapter() }
+        val adapter = NotesAdapter(this)
+
+
+//        binding.rvNotesFragment.setHasFixedSize(true)
+//        binding.rvNotesFragment.layoutManager =
+//            StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL)
         binding.rvNotesFragment.adapter = adapter
-        binding.rvNotesFragment.setHasFixedSize(true)
-        binding.rvNotesFragment.layoutManager =
-            StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL)
-
-        notesViewModel.allNotes.observe(viewLifecycleOwner) { notes ->
-            adapter?.submitList(notes)
-        }
+        notesViewModel.allNotes.observe(viewLifecycleOwner, Observer { notes ->
+            Log.d("Ololo", "observe: $notes")
+            adapter.submitList(notes)
+        })
 
         binding.fabNewNote.setOnClickListener {
             Navigation.findNavController(view)
                 .navigate(R.id.action_notesFragment_to_editNoteFragment)
+            Log.d("Ololo", "fabNewNote: $view")
         }
+//        val itemTouchHelperCallback = object :
+//            ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
+//            override fun onMove(
+//                recyclerView: RecyclerView,
+//                viewHolder: RecyclerView.ViewHolder,
+//                target: RecyclerView.ViewHolder
+//            ): Boolean {
+//
+//                return false
+//            }
+//
+//            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+//                TODO("Not yet implemented")
+//            }
+//        }
+
+//        val itemTouchHelper = ItemTouchHelper(itemTouchHelperCallback)
+//        itemTouchHelper.attachToRecyclerView(binding.rvNotesFragment)
     }
 
     override fun onDestroyView() {
         _binding = null
         super.onDestroyView()
+    }
 
+    override fun onItemClick(infoNote: InfoNote) {
+
+        infoNote.id?.let {
+                val view: NotesFragment = this@NotesFragment
+                val action =
+                    NotesFragmentDirections.actionNotesFragmentToEditNoteFragment(infoNote.id)
+                view.findNavController().navigate(action)
+        }
     }
 }
+

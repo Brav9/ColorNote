@@ -1,3 +1,3 @@
 package com.khalbro.colornote.domain.models
 
-class InfoNote(val textNote: String, val noteTitle: String, val id: Long?)
+data class InfoNote(val text: String, val title: String, val id: Long?)

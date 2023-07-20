@@ -1,7 +1,6 @@
 package com.khalbro.colornote.domain.repository
 
 import androidx.lifecycle.LiveData
-import com.khalbro.colornote.data.local.entity.Note
 import com.khalbro.colornote.domain.models.InfoNote
 
 interface InfoNoteRepository {
@@ -10,7 +9,7 @@ interface InfoNoteRepository {
 
     suspend fun deleteInfoNote(id: Long)
 
-    fun getAllNotesInfoNote(): LiveData<List<Note>>
+    fun getAllNotesInfoNote(): LiveData<List<InfoNote>>
 
     suspend fun getNoteById(id: Long): InfoNote?
 
