@@ -93,6 +93,7 @@ class NotesFragment : Fragment(), NotesAdapter.OnClickListener {
 
         infoNote.id?.let {
                 val view: NotesFragment = this@NotesFragment
+//            notesViewModel.getNoteById(infoNote.id)
                 val action =
                     NotesFragmentDirections.actionNotesFragmentToEditNoteFragment(infoNote.id)
                 view.findNavController().navigate(action)

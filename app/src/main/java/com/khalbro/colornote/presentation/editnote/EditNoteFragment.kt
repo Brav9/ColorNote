@@ -2,6 +2,7 @@ package com.khalbro.colornote.presentation.editnote
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -17,6 +18,7 @@ import com.khalbro.colornote.data.local.entity.Note
 import com.khalbro.colornote.databinding.FragmentEditNoteBinding
 import com.khalbro.colornote.domain.models.InfoNote
 import com.khalbro.colornote.presentation.allnotes.NotesFragment
+import kotlinx.coroutines.job
 import kotlin.random.Random
 
 class EditNoteFragment : Fragment() {
@@ -25,8 +27,6 @@ class EditNoteFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
-
         return inflater.inflate(R.layout.fragment_edit_note, container, false)
     }
 
@@ -44,10 +44,14 @@ class EditNoteFragment : Fragment() {
         binding.etTitle.setText(note?.title)
         binding.etText.setText(note?.text)
 
-//        val textId = arguments?.getLong("id")
         val argsId: EditNoteFragmentArgs by navArgs()
-        val text = argsId.noteId.toString()
-        binding.etText.setText(text)
+        val id = argsId.noteId
+
+        noteSaveViewModel.resultNoteById.observe(this.viewLifecycleOwner) {
+            binding.etText.setText(it.text)
+            binding.etTitle.setText(it.title)
+        }
+        noteSaveViewModel.getNoteById(id).toString()
 
         binding.btnSaveNote.setOnClickListener {
             val title = binding.etTitle.text.toString()

@@ -6,7 +6,6 @@ import com.khalbro.colornote.domain.repository.InfoNoteRepository
 class GetNoteByIdUseCase(private val infoNoteRepository: InfoNoteRepository) {
 
     suspend operator fun invoke(id: Long): InfoNote? {
-
         return infoNoteRepository.getNoteById(id)
     }
 }

@@ -10,6 +10,7 @@ import com.khalbro.colornote.data.repository.InfoNoteRepositoryImpl
 import com.khalbro.colornote.domain.models.InfoNote
 import com.khalbro.colornote.domain.repository.InfoNoteRepository
 import com.khalbro.colornote.domain.usecase.GetAllNotesUseCase
+import com.khalbro.colornote.domain.usecase.GetNoteByIdUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -20,7 +21,7 @@ class NotesViewModel(application: Application) : AndroidViewModel(application) {
         InfoNoteRepositoryImpl(notesDao = NotesRoomDatabase.getDatabase(application).notesDao())
 
     private val getAllNotesUseCase = GetAllNotesUseCase(infoNoteRepository = repository)
-
     val allNotes = getAllNotesUseCase.invoke()
-//    val allNotes = getAllNotesUseCase()
+
+
 }
