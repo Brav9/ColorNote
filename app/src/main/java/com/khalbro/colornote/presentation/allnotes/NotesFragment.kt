@@ -49,7 +49,6 @@ class NotesFragment : Fragment(), NotesAdapter.OnClickListener {
 
         val adapter = NotesAdapter(this)
 
-
 //        binding.rvNotesFragment.setHasFixedSize(true)
 //        binding.rvNotesFragment.layoutManager =
 //            StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL)
