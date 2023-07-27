@@ -25,7 +25,7 @@ class NoteSaveViewModel(application: Application) : AndroidViewModel(application
     private val _resultNoteById: MutableLiveData<InfoNote> = MutableLiveData<InfoNote>()
     var resultNoteById: LiveData<InfoNote> = _resultNoteById
 
-    @Deprecated("Use Coin")
+    @Deprecated("Use Koin")
     private val repository: InfoNoteRepository =
         InfoNoteRepositoryImpl(notesDao = NotesRoomDatabase.getDatabase(application).notesDao())
 

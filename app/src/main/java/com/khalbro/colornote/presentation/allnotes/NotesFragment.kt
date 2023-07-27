@@ -1,5 +1,6 @@
 package com.khalbro.colornote.presentation.allnotes
 
+import android.app.AlertDialog
 import android.content.Intent
 import android.icu.text.Transliterator.Position
 import android.os.Bundle
@@ -48,10 +49,6 @@ class NotesFragment : Fragment(), NotesAdapter.OnClickListener {
         Log.d("Ololo", "onViewCreated: 01")
 
         val adapter = NotesAdapter(this)
-
-//        binding.rvNotesFragment.setHasFixedSize(true)
-//        binding.rvNotesFragment.layoutManager =
-//            StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL)
         binding.rvNotesFragment.adapter = adapter
         notesViewModel.allNotes.observe(viewLifecycleOwner, Observer { notes ->
             Log.d("Ololo", "observe: $notes")
@@ -63,24 +60,6 @@ class NotesFragment : Fragment(), NotesAdapter.OnClickListener {
                 .navigate(R.id.action_notesFragment_to_editNoteFragment)
             Log.d("Ololo", "fabNewNote: $view")
         }
-//        val itemTouchHelperCallback = object :
-//            ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
-//            override fun onMove(
-//                recyclerView: RecyclerView,
-//                viewHolder: RecyclerView.ViewHolder,
-//                target: RecyclerView.ViewHolder
-//            ): Boolean {
-//
-//                return false
-//            }
-//
-//            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-//                TODO("Not yet implemented")
-//            }
-//        }
-
-//        val itemTouchHelper = ItemTouchHelper(itemTouchHelperCallback)
-//        itemTouchHelper.attachToRecyclerView(binding.rvNotesFragment)
     }
 
     override fun onDestroyView() {
@@ -91,11 +70,30 @@ class NotesFragment : Fragment(), NotesAdapter.OnClickListener {
     override fun onItemClick(infoNote: InfoNote) {
 
         infoNote.id?.let {
-                val view: NotesFragment = this@NotesFragment
-//            notesViewModel.getNoteById(infoNote.id)
-                val action =
-                    NotesFragmentDirections.actionNotesFragmentToEditNoteFragment(infoNote.id)
-                view.findNavController().navigate(action)
+            val view: NotesFragment = this@NotesFragment
+            val action =
+                NotesFragmentDirections.actionNotesFragmentToEditNoteFragment(infoNote.id)
+            view.findNavController().navigate(action)
+        }
+    }
+
+    override fun onLongItemClick(infoNote: InfoNote) {
+        deleteItem(infoNote)
+    }
+
+    private fun deleteItem(infoNote: InfoNote) {
+        val alertBuilder = AlertDialog.Builder(context)
+        alertBuilder.run {
+            setTitle("Delete")
+            setMessage("Do you want to delete this item?")
+            setPositiveButton("Yes") { _, _ ->
+                infoNote.id?.let { notesViewModel.deleteNoteById(it) }
+            }
+            setNegativeButton("No") { _, _ ->
+
+            }
+            val alert = alertBuilder.create()
+            alert.show()
         }
     }
 }
