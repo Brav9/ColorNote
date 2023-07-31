@@ -16,8 +16,8 @@ import kotlinx.coroutines.launch
 
 class NotesViewModel(application: Application) : AndroidViewModel(application) {
 
-    private val _deleteNoteById: MutableLiveData<InfoNote> = MutableLiveData<InfoNote>()
-    var deleteNoteById: LiveData<InfoNote> = _deleteNoteById
+//    private val _deleteNoteById: MutableLiveData<InfoNote> = MutableLiveData<InfoNote>()
+////    var deleteNoteById: LiveData<InfoNote> = _deleteNoteById
 
     @Deprecated("Use Koin")
     private val repository: InfoNoteRepository =
@@ -34,6 +34,4 @@ class NotesViewModel(application: Application) : AndroidViewModel(application) {
         deleteNoteUseCase.invoke(id)
 
     }
-
-
 }

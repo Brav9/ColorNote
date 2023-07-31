@@ -11,5 +11,7 @@ data class Note(
     @ColumnInfo(name = "text") // необяз
     val text: String,
     @ColumnInfo(name = "title")
-    val title: String
+    val title: String,
+    @ColumnInfo(name = "color")
+    val color: String
 )

@@ -7,4 +7,12 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    //colorBackground
+    <color name="ivory">#EDE9E3</color>
+    <color name="nude">#E7D7C9</color>
+    <color name="terracotta">#BE8F6E</color>
+    <color name="cool_sage">#87816E</color>
+    <color name="rose">#D4B2A7</color>
+    <color name="stone">#CDC6C3</color>
 </resources>

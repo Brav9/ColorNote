@@ -1,29 +1,27 @@
 package com.khalbro.colornote.presentation.editnote
 
 import android.app.Application
-import android.content.Context
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.khalbro.colornote.data.local.NotesRoomDatabase
-import com.khalbro.colornote.data.local.entity.Note
 import com.khalbro.colornote.data.repository.InfoNoteRepositoryImpl
 import com.khalbro.colornote.domain.models.InfoNote
 import com.khalbro.colornote.domain.repository.InfoNoteRepository
-import com.khalbro.colornote.domain.usecase.GetAllNotesUseCase
 import com.khalbro.colornote.domain.usecase.GetNoteByIdUseCase
 import com.khalbro.colornote.domain.usecase.SaveNoteUseCase
-import com.khalbro.colornote.presentation.MainActivity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class NoteSaveViewModel(application: Application) : AndroidViewModel(application) {
+class EditNoteViewModel(application: Application) : AndroidViewModel(application) {
 
-    private val _resultNoteById: MutableLiveData<InfoNote> = MutableLiveData<InfoNote>()
-    var resultNoteById: LiveData<InfoNote> = _resultNoteById
+    private val _note: MutableLiveData<InfoNote> = MutableLiveData<InfoNote>()
+    var note: LiveData<InfoNote> = _note
+
+    private val _navigateBackEvent: MutableLiveData<Unit> = MutableLiveData<Unit>()
+    var navigateBackEvent: LiveData<Unit> = _navigateBackEvent
 
     @Deprecated("Use Koin")
     private val repository: InfoNoteRepository =
@@ -35,7 +33,7 @@ class NoteSaveViewModel(application: Application) : AndroidViewModel(application
 
     private val getNoteByIdUseCase = GetNoteByIdUseCase(infoNoteRepository = repository)
 
-    fun insertNote(note: InfoNote) = viewModelScope.launch(Dispatchers.IO) {
+    private fun insertNote(note: InfoNote) = viewModelScope.launch(Dispatchers.IO) {
         saveNoteUseCase.invoke(note)
     }
 
@@ -43,10 +41,36 @@ class NoteSaveViewModel(application: Application) : AndroidViewModel(application
         val noteById = getNoteByIdUseCase.invoke(id)
         withContext(Dispatchers.Main) {
             noteById?.let {
-                _resultNoteById.value = it
+                _note.value = it
             } ?: run {
-                _resultNoteById.value = InfoNote(text = "", title = "", id = null)
+                _note.value = InfoNote(text = "", title = "", id = null)
             }
+        }
+    }
+
+    fun onTextChanged(text: String) {
+        val currentNote = note.value
+        currentNote?.let {
+            if (currentNote.text != text) {
+                _note.value = currentNote.copy(text = text)
+            }
+        }
+    }
+
+    fun onTitleChanged(text: String) {
+        val currentNote = note.value
+        currentNote?.let {
+            if (currentNote.title != text) {
+                _note.value = currentNote.copy(title = text)
+            }
+        }
+    }
+
+    fun onSaveClick() {
+        val currentNote = note.value
+        currentNote?.let {
+            insertNote(it)
+            _navigateBackEvent.value = Unit
         }
     }
 }

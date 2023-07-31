@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.os.bundleOf
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
@@ -41,6 +42,7 @@ class NotesFragment : Fragment(), NotesAdapter.OnClickListener {
         Log.d("Ololo", "onCreateView: $inflater")
         _binding = FragmentNotesBinding.inflate(inflater, container, false)
         return binding.root
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -53,6 +55,7 @@ class NotesFragment : Fragment(), NotesAdapter.OnClickListener {
         notesViewModel.allNotes.observe(viewLifecycleOwner, Observer { notes ->
             Log.d("Ololo", "observe: $notes")
             adapter.submitList(notes)
+
         })
 
         binding.fabNewNote.setOnClickListener {
@@ -68,7 +71,6 @@ class NotesFragment : Fragment(), NotesAdapter.OnClickListener {
     }
 
     override fun onItemClick(infoNote: InfoNote) {
-
         infoNote.id?.let {
             val view: NotesFragment = this@NotesFragment
             val action =

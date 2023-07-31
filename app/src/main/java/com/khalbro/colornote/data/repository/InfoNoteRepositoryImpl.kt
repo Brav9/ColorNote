@@ -14,7 +14,8 @@ class InfoNoteRepositoryImpl(private val notesDao: NotesDao) : InfoNoteRepositor
         val note = Note(
             id = saveInfoNote.id,
             title = saveInfoNote.title,
-            text = saveInfoNote.text
+            text = saveInfoNote.text,
+            color = saveInfoNote.color
         )
         notesDao.insertNote(note)
     }
@@ -23,13 +24,14 @@ class InfoNoteRepositoryImpl(private val notesDao: NotesDao) : InfoNoteRepositor
         notesDao.deleteNote(id)
     }
 
-     override fun getAllNotesInfoNote(): LiveData<List<InfoNote>> {
+    override fun getAllNotesInfoNote(): LiveData<List<InfoNote>> {
         return notesDao.getAllNotes().map { listOfNotes ->
             listOfNotes.map {
                 InfoNote(
                     id = it.id,
                     text = it.text,
-                    title = it.title
+                    title = it.title,
+                    color = it.color
                 )
             }
         }
@@ -40,7 +42,8 @@ class InfoNoteRepositoryImpl(private val notesDao: NotesDao) : InfoNoteRepositor
         return if (getNote != null) InfoNote(
             id = getNote.id,
             text = getNote.text,
-            title = getNote.title
+            title = getNote.title,
+            color = getNote.color
         ) else null
     }
 }
