@@ -1,33 +1,19 @@
 package com.khalbro.colornote.presentation.allnotes
 
 import android.app.AlertDialog
-import android.content.Intent
-import android.icu.text.Transliterator.Position
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
-import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.os.bundleOf
-import androidx.fragment.app.FragmentActivity
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentTransaction
-import androidx.fragment.app.ListFragment
-import androidx.fragment.app.setFragmentResult
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.NavController
 import androidx.navigation.Navigation
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
-import com.google.android.material.tabs.TabLayout.TabGravity
 import com.khalbro.colornote.R
 import com.khalbro.colornote.databinding.FragmentNotesBinding
 import com.khalbro.colornote.domain.models.InfoNote
-import com.khalbro.colornote.presentation.editnote.EditNoteFragment
 
 class NotesFragment : Fragment(), NotesAdapter.OnClickListener {
 
@@ -42,7 +28,6 @@ class NotesFragment : Fragment(), NotesAdapter.OnClickListener {
         Log.d("Ololo", "onCreateView: $inflater")
         _binding = FragmentNotesBinding.inflate(inflater, container, false)
         return binding.root
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -55,7 +40,6 @@ class NotesFragment : Fragment(), NotesAdapter.OnClickListener {
         notesViewModel.allNotes.observe(viewLifecycleOwner, Observer { notes ->
             Log.d("Ololo", "observe: $notes")
             adapter.submitList(notes)
-
         })
 
         binding.fabNewNote.setOnClickListener {
@@ -91,9 +75,7 @@ class NotesFragment : Fragment(), NotesAdapter.OnClickListener {
             setPositiveButton("Yes") { _, _ ->
                 infoNote.id?.let { notesViewModel.deleteNoteById(it) }
             }
-            setNegativeButton("No") { _, _ ->
-
-            }
+            setNegativeButton("No") { _, _ -> }
             val alert = alertBuilder.create()
             alert.show()
         }

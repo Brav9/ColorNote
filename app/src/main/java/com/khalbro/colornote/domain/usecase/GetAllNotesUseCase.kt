@@ -7,8 +7,6 @@ import com.khalbro.colornote.domain.repository.InfoNoteRepository
 class GetAllNotesUseCase(private val infoNoteRepository: InfoNoteRepository) {
 
     operator fun invoke(): LiveData<List<InfoNote>> {
-
         return infoNoteRepository.getAllNotesInfoNote()
-
     }
 }

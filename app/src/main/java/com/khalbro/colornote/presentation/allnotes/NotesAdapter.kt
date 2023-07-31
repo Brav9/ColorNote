@@ -1,8 +1,6 @@
 package com.khalbro.colornote.presentation.allnotes
 
 import android.util.Log
-import android.view.View
-import android.view.View.OnLongClickListener
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -10,8 +8,7 @@ import com.khalbro.colornote.domain.models.InfoNote
 
 class NotesAdapter(
     private val listener: OnClickListener
-) :
-    ListAdapter<InfoNote, NotesViewHolder>(NotesDiffCallback()) {
+) : ListAdapter<InfoNote, NotesViewHolder>(NotesDiffCallback()) {
 
     interface OnClickListener {
         fun onItemClick(infoNote: InfoNote)
@@ -27,7 +24,6 @@ class NotesAdapter(
         Log.d("Ololo", "onBindViewHolder: $holder")
         val item = getItem(position)
         holder.bind(item, listener)
-
     }
 }
 

@@ -15,11 +15,12 @@ class NotesViewHolder(private val binding: ItemNoteBinding) :
         item: InfoNote,
         listener: NotesAdapter.OnClickListener,
     ) {
-
         val color = Color.parseColor(item.getBackgroundColor())
+
         binding.constraintLayoutEditNote.setBackgroundColor(color)
         binding.tvNoteText.text = item.text
         binding.tvNoteTitleText.text = item.title
+
         if (binding.tvNoteTitleText.text.isBlank())
             binding.tvNoteTitleText.visibility = View.GONE
         else
@@ -31,7 +32,6 @@ class NotesViewHolder(private val binding: ItemNoteBinding) :
 
         itemView.setOnLongClickListener {
             listener.onLongItemClick(item)
-
             return@setOnLongClickListener true
         }
     }

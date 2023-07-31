@@ -27,5 +27,4 @@ data class InfoNote(
             return numRandom
         }
     }
-
 }
