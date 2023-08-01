@@ -4,9 +4,15 @@ import android.graphics.Color
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.MenuHost
+import androidx.core.view.MenuProvider
 import androidx.core.widget.doOnTextChanged
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -28,14 +34,13 @@ class EditNoteFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val binding = FragmentEditNoteBinding.bind(view)
-        fragmentNotesBinding = binding
-        editNoteViewModel = ViewModelProvider(this)[EditNoteViewModel::class.java]
-
+        val menuHost: MenuHost = requireActivity()
         val argsId: EditNoteFragmentArgs by navArgs()
         val id = argsId.noteId
 
+        fragmentNotesBinding = binding
+        editNoteViewModel = ViewModelProvider(this)[EditNoteViewModel::class.java]
         editNoteViewModel.getNoteById(id).toString()
-
         editNoteViewModel.note.observe(this.viewLifecycleOwner) {
             if (it.text != binding.etText.text.toString()) {
                 binding.etText.setText(it.text)
@@ -72,5 +77,18 @@ class EditNoteFragment : Fragment() {
         binding.btnSaveNote.setOnClickListener {
             editNoteViewModel.onSaveClick()
         }
+
+        menuHost.addMenuProvider(object : MenuProvider {
+            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                menuInflater.inflate(R.menu.menu_main, menu)
+            }
+
+            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                return when (menuItem.itemId) {
+                    R.menu.menu_main -> true
+                    else -> false
+                }
+            }
+        }, viewLifecycleOwner, Lifecycle.State.RESUMED)
     }
 }

@@ -2,4 +2,9 @@
     <string name="app_name">ColorNote</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!--   Menu-->
+    <string name="action_color_profile">color profile</string>
+    <string name="warm">warm</string>
+    <string name="cold">cold</string>
+
 </resources>
