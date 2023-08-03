@@ -11,27 +11,27 @@
         app:showAsAction="never">
         <menu>
             <item
-                android:id="@+id/menuWarm"
+                android:id="@+id/menuGray"
                 android:orderInCategory="100"
                 android:title="@string/gray"
                 app:showAsAction="never" />
             <item
-                android:id="@+id/menuNude"
+                android:id="@+id/menuGrayishOrange"
                 android:orderInCategory="100"
                 android:title="@string/grayish_orange"
                 app:showAsAction="never" />
             <item
-                android:id="@+id/menuRose"
+                android:id="@+id/menuBlue"
                 android:orderInCategory="100"
                 android:title="@string/blue"
                 app:showAsAction="never" />
             <item
-                android:id="@+id/menuCoolSage"
+                android:id="@+id/menuGreen"
                 android:orderInCategory="100"
                 android:title="@string/green"
                 app:showAsAction="never" />
             <item
-                android:id="@+id/menuStone"
+                android:id="@+id/menuRed"
                 android:orderInCategory="100"
                 android:title="@string/red"
                 app:showAsAction="never" />

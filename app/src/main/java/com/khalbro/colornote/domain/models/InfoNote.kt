@@ -23,7 +23,7 @@ data class InfoNote(
     fun getBackgroundColor(): String {
         return when (color) {
             "1" -> "#909090" // gray
-            "2" -> "#E7D7C9" // light grayish orange
+            "2" -> "#E7D7C9" // grayish orange
             "3" -> "#9EB49E" // green
             "4" -> "#E06666"// red
             "5" -> "#95A0BB" // blue

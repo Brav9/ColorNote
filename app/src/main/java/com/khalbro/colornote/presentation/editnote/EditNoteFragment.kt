@@ -9,6 +9,8 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
+import androidx.core.graphics.toColor
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.core.widget.doOnTextChanged
@@ -88,11 +90,67 @@ class EditNoteFragment : Fragment() {
 
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
                 return when (menuItem.itemId) {
-                    R.id.menuNude -> {
-                        binding.constraintLayoutEditNote.setBackgroundResource(R.color.nude)
+                    R.id.menuGrayishOrange -> {
+                        binding.constraintLayoutEditNote.setBackgroundResource(R.color.grayish_orange)
+                        binding.ivVerticalLine.setBackgroundResource(R.color.grayish_orange_line)
+                        context?.let {
+                            ContextCompat.getColor(
+                                it, R.color.grayish_orange_line
+                            )
+                        }?.let {
+                            binding.btnSaveNote.setBackgroundColor(it)
+                        }
                         true
                     }
-                    R.menu.menu_edit_note -> true
+
+                    R.id.menuBlue -> {
+                        binding.constraintLayoutEditNote.setBackgroundResource(R.color.blue)
+                        binding.ivVerticalLine.setBackgroundResource(R.color.blue_line)
+                        context?.let {
+                            ContextCompat.getColor(
+                                it, R.color.blue_line
+                            )
+                        }?.let {
+                            binding.btnSaveNote.setBackgroundColor(it)
+                        }
+                        true
+                    }
+                    R.id.menuGray -> {
+                        binding.constraintLayoutEditNote.setBackgroundResource(R.color.gray)
+                        binding.ivVerticalLine.setBackgroundResource(R.color.gray_line)
+                        context?.let {
+                            ContextCompat.getColor(
+                                it, R.color.gray_line
+                            )
+                        }?.let {
+                            binding.btnSaveNote.setBackgroundColor(it)
+                        }
+                        true
+                    }
+                    R.id.menuRed -> {
+                        binding.constraintLayoutEditNote.setBackgroundResource(R.color.red)
+                        binding.ivVerticalLine.setBackgroundResource(R.color.red_line)
+                        context?.let {
+                            ContextCompat.getColor(
+                                it, R.color.red_line
+                            )
+                        }?.let {
+                            binding.btnSaveNote.setBackgroundColor(it)
+                        }
+                        true
+                    }
+                    R.id.menuGreen -> {
+                        binding.constraintLayoutEditNote.setBackgroundResource(R.color.green)
+                        binding.ivVerticalLine.setBackgroundResource(R.color.green_line)
+                        context?.let {
+                            ContextCompat.getColor(
+                                it, R.color.green_line
+                            )
+                        }?.let {
+                            binding.btnSaveNote.setBackgroundColor(it)
+                        }
+                        true
+                    }
                     else -> false
                 }
             }
