@@ -73,4 +73,13 @@ class EditNoteViewModel(application: Application) : AndroidViewModel(application
             _navigateBackEvent.value = Unit
         }
     }
+
+    fun onColorChanged(color: String) {
+        val currentNote = note.value
+        currentNote?.let {
+            if (currentNote.color != color) {
+                _note.value = currentNote.copy(color = color)
+            }
+        }
+    }
 }

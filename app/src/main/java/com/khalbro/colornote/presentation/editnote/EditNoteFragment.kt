@@ -2,7 +2,6 @@ package com.khalbro.colornote.presentation.editnote
 
 import android.graphics.Color
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
@@ -10,10 +9,10 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
-import androidx.core.graphics.toColor
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.core.widget.doOnTextChanged
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -79,6 +78,7 @@ class EditNoteFragment : Fragment() {
             }
         }
 
+
         binding.btnSaveNote.setOnClickListener {
             editNoteViewModel.onSaveClick()
         }
@@ -100,6 +100,7 @@ class EditNoteFragment : Fragment() {
                         }?.let {
                             binding.btnSaveNote.setBackgroundColor(it)
                         }
+                        editNoteViewModel.onColorChanged("2")
                         true
                     }
 
@@ -113,8 +114,10 @@ class EditNoteFragment : Fragment() {
                         }?.let {
                             binding.btnSaveNote.setBackgroundColor(it)
                         }
+                        editNoteViewModel.onColorChanged("5")
                         true
                     }
+
                     R.id.menuGray -> {
                         binding.constraintLayoutEditNote.setBackgroundResource(R.color.gray)
                         binding.ivVerticalLine.setBackgroundResource(R.color.gray_line)
@@ -125,8 +128,10 @@ class EditNoteFragment : Fragment() {
                         }?.let {
                             binding.btnSaveNote.setBackgroundColor(it)
                         }
+                        editNoteViewModel.onColorChanged("1")
                         true
                     }
+
                     R.id.menuRed -> {
                         binding.constraintLayoutEditNote.setBackgroundResource(R.color.red)
                         binding.ivVerticalLine.setBackgroundResource(R.color.red_line)
@@ -137,8 +142,10 @@ class EditNoteFragment : Fragment() {
                         }?.let {
                             binding.btnSaveNote.setBackgroundColor(it)
                         }
+                        editNoteViewModel.onColorChanged("4")
                         true
                     }
+
                     R.id.menuGreen -> {
                         binding.constraintLayoutEditNote.setBackgroundResource(R.color.green)
                         binding.ivVerticalLine.setBackgroundResource(R.color.green_line)
@@ -149,8 +156,10 @@ class EditNoteFragment : Fragment() {
                         }?.let {
                             binding.btnSaveNote.setBackgroundColor(it)
                         }
+                        editNoteViewModel.onColorChanged("3")
                         true
                     }
+
                     else -> false
                 }
             }
