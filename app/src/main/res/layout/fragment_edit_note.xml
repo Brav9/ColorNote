@@ -27,7 +27,7 @@
                 android:id="@+id/ivVerticalLine"
                 android:layout_width="20dp"
                 android:layout_height="match_parent"
-                android:background="@color/material_dynamic_neutral60"
+                tools:background="@color/dark_grey"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -37,31 +37,33 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
                 android:background="@null"
-                tools:text="ololololololololo"
+                android:textSize="22sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toTopOf="@+id/etText"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/ivVerticalLine"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="ololololololololo" />
 
             <EditText
                 android:id="@+id/etText"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
                 android:background="@null"
                 android:gravity="start|top"
                 android:inputType="textMultiLine"
-                tools:text="ololololololololo"
+                android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/ivVerticalLine"
-                app:layout_constraintTop_toBottomOf="@+id/etTitle" />
+                app:layout_constraintTop_toBottomOf="@+id/etTitle"
+                tools:text="ololololololololo" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -74,9 +76,9 @@
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
-        android:backgroundTint="@color/material_dynamic_neutral60"
+        android:backgroundTint="@color/dark_grey"
         android:text="Save"
-        app:cornerRadius="16dp"
+        app:cornerRadius="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

@@ -6,11 +6,10 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginLeft="8dp"
-    android:layout_marginTop="12dp"
+    android:layout_marginTop="8dp"
     android:layout_marginRight="8dp"
-    android:layout_marginBottom="12dp"
+    android:layout_marginBottom="8dp"
     app:cardCornerRadius="8dp"
-
     app:cardElevation="4dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -22,10 +21,10 @@
             android:id="@+id/ivVerticalLineNote"
             android:layout_width="20dp"
             android:layout_height="0dp"
-            android:background="@color/material_dynamic_neutral60"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:background="@color/rose" />
 
         <TextView
             android:id="@+id/tvNoteText"
@@ -43,7 +42,6 @@
             tools:text="ololololo" />
 
         <TextView
-
             android:id="@+id/tvNoteTitleText"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

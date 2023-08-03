@@ -46,7 +46,10 @@ class NotesFragment : Fragment(), NotesAdapter.OnClickListener {
 
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
                 return when (menuItem.itemId) {
-                    R.menu.menu_main -> true
+                    R.menu.menu_main -> {
+                        true
+                    }
+
                     else -> false
                 }
             }

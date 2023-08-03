@@ -7,4 +7,10 @@
     <string name="warm">warm</string>
     <string name="cold">cold</string>
 
+    <string name="gray">gray</string>
+    <string name="grayish_orange">grayish orange</string>
+    <string name="green">green</string>
+    <string name="red">red</string>
+    <string name="blue">blue</string>
+
 </resources>

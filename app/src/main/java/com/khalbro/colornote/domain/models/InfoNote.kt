@@ -9,14 +9,25 @@ data class InfoNote(
     val color: String = randomColorBackground()
 ) {
 
+    fun getBackgroundColorVerticalLine(): String {
+        return when (color) {
+            "1" -> "#606060" // OK
+            "2" -> "#C4ACA3" //OK
+            "3" -> "#7E907E" // OK
+            "4" -> "#B35151"
+            "5" -> "#7684A7" // OK
+            else -> "#BFA19B"
+        }
+    }
+
     fun getBackgroundColor(): String {
         return when (color) {
-            "1" -> "#D4B2A7"
-            "2" -> "#E7D7C9"
-            "3" -> "#BE8F6E"
-            "4" -> "#87816E"
-            "5" -> "#CDC6C3"
-            else -> "#EDE9E3"
+            "1" -> "#909090" // gray
+            "2" -> "#E7D7C9" // light grayish orange
+            "3" -> "#9EB49E" // green
+            "4" -> "#E06666"// red
+            "5" -> "#95A0BB" // blue
+            else -> "#D3BEBA"
         }
     }
 

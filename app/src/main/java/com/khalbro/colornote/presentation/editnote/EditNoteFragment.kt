@@ -41,26 +41,29 @@ class EditNoteFragment : Fragment() {
         fragmentNotesBinding = binding
         editNoteViewModel = ViewModelProvider(this)[EditNoteViewModel::class.java]
         editNoteViewModel.getNoteById(id).toString()
+
         editNoteViewModel.note.observe(this.viewLifecycleOwner) {
             if (it.text != binding.etText.text.toString()) {
                 binding.etText.setText(it.text)
             }
             val color = Color.parseColor(it.getBackgroundColor())
             binding.constraintLayoutEditNote.setBackgroundColor(color)
+            val colorSecond = Color.parseColor(it.getBackgroundColorVerticalLine())
+            binding.ivVerticalLine.setBackgroundColor(colorSecond)
+            binding.btnSaveNote.setBackgroundColor(colorSecond)
         }
 
         editNoteViewModel.note.observe(this.viewLifecycleOwner) {
             if (it.text != binding.etTitle.text.toString()) {
                 binding.etTitle.setText(it.title)
             }
-            val color = Color.parseColor(it.getBackgroundColor())
-            binding.constraintLayoutEditNote.setBackgroundColor(color)
+//            val color = Color.parseColor(it.getBackgroundColor())
+//            binding.constraintLayoutEditNote.setBackgroundColor(color)
         }
 
         editNoteViewModel.navigateBackEvent.observe(this.viewLifecycleOwner) {
             findNavController().popBackStack()
         }
-
 
         binding.etText.doOnTextChanged { text, start, before, count ->
             text?.let {
@@ -80,12 +83,16 @@ class EditNoteFragment : Fragment() {
 
         menuHost.addMenuProvider(object : MenuProvider {
             override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
-                menuInflater.inflate(R.menu.menu_main, menu)
+                menuInflater.inflate(R.menu.menu_edit_note, menu)
             }
 
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
                 return when (menuItem.itemId) {
-                    R.menu.menu_main -> true
+                    R.id.menuNude -> {
+                        binding.constraintLayoutEditNote.setBackgroundResource(R.color.nude)
+                        true
+                    }
+                    R.menu.menu_edit_note -> true
                     else -> false
                 }
             }
