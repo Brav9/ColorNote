@@ -12,5 +12,7 @@
     <string name="green">green</string>
     <string name="red">red</string>
     <string name="blue">blue</string>
+    <string name="title">title note</string>
+    <string name="text">text note</string>
 
 </resources>
