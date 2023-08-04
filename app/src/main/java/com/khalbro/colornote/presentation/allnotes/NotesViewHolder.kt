@@ -1,7 +1,5 @@
 package com.khalbro.colornote.presentation.allnotes
 
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -17,8 +15,8 @@ class NotesViewHolder(private val binding: ItemNoteBinding) :
         item: InfoNote,
         listener: NotesAdapter.OnClickListener,
     ) {
-        val colorSecond = Color.parseColor(item.getBackgroundColorVerticalLine())
-        val colorFirst = Color.parseColor(item.getBackgroundColor())
+        val colorSecond = item.getBackgroundColorVerticalLine(binding.root.context)
+        val colorFirst = item.getBackgroundColor(binding.root.context)
         binding.constraintLayoutEditNote.setBackgroundColor(colorFirst)
         binding.ivVerticalLineNote.setBackgroundColor(colorSecond)
         Log.d("Ololo", "bind: $colorSecond)")
@@ -36,6 +34,7 @@ class NotesViewHolder(private val binding: ItemNoteBinding) :
 
         itemView.setOnLongClickListener {
             listener.onLongItemClick(item)
+
             return@setOnLongClickListener true
         }
     }

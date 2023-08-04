@@ -49,6 +49,7 @@
                 tools:text="ololololololololo" />
 
             <EditText
+                android:imeOptions="actionDone"
                 android:id="@+id/etText"
                 android:layout_width="0dp"
                 android:layout_height="0dp"

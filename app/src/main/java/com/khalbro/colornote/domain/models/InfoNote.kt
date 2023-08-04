@@ -1,6 +1,9 @@
 package com.khalbro.colornote.domain.models
 
+import android.content.Context
 import android.util.Log
+import androidx.core.content.ContextCompat
+import com.khalbro.colornote.R
 
 data class InfoNote(
     val text: String,
@@ -9,25 +12,25 @@ data class InfoNote(
     val color: String = randomColorBackground()
 ) {
 
-    fun getBackgroundColorVerticalLine(): String {
+    fun getBackgroundColorVerticalLine(context: Context): Int {
         return when (color) {
-            "1" -> "#606060" // OK
-            "2" -> "#C4ACA3" //OK
-            "3" -> "#7E907E" // OK
-            "4" -> "#B35151"
-            "5" -> "#7684A7" // OK
-            else -> "#BFA19B"
+            "1" -> ContextCompat.getColor(context, R.color.gray_line)
+            "2" -> ContextCompat.getColor(context, R.color.grayish_orange_line)
+            "3" -> ContextCompat.getColor(context, R.color.green_line)
+            "4" -> ContextCompat.getColor(context, R.color.red_line)
+            "5" -> ContextCompat.getColor(context, R.color.blue_line)
+            else -> ContextCompat.getColor(context, R.color.stone_line)
         }
     }
 
-    fun getBackgroundColor(): String {
+    fun getBackgroundColor(context: Context): Int {
         return when (color) {
-            "1" -> "#909090" // gray
-            "2" -> "#E7D7C9" // grayish orange
-            "3" -> "#9EB49E" // green
-            "4" -> "#E06666"// red
-            "5" -> "#95A0BB" // blue
-            else -> "#D3BEBA"
+            "1" -> ContextCompat.getColor(context, R.color.gray)
+            "2" -> ContextCompat.getColor(context, R.color.grayish_orange)
+            "3" -> ContextCompat.getColor(context, R.color.green)
+            "4" -> ContextCompat.getColor(context, R.color.red)
+            "5" -> ContextCompat.getColor(context, R.color.blue)
+            else -> ContextCompat.getColor(context, R.color.stone)
         }
     }
 

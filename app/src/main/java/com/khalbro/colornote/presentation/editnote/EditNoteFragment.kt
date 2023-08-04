@@ -1,6 +1,5 @@
 package com.khalbro.colornote.presentation.editnote
 
-import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Menu
@@ -47,19 +46,14 @@ class EditNoteFragment : Fragment() {
             if (it.text != binding.etText.text.toString()) {
                 binding.etText.setText(it.text)
             }
-            val color = Color.parseColor(it.getBackgroundColor())
-            binding.constraintLayoutEditNote.setBackgroundColor(color)
-            val colorSecond = Color.parseColor(it.getBackgroundColorVerticalLine())
-            binding.ivVerticalLine.setBackgroundColor(colorSecond)
-            binding.btnSaveNote.setBackgroundColor(colorSecond)
-        }
-
-        editNoteViewModel.note.observe(this.viewLifecycleOwner) {
-            if (it.text != binding.etTitle.text.toString()) {
+            if (it.title != binding.etTitle.text.toString()) {
                 binding.etTitle.setText(it.title)
             }
-//            val color = Color.parseColor(it.getBackgroundColor())
-//            binding.constraintLayoutEditNote.setBackgroundColor(color)
+            val color = it.getBackgroundColor(binding.root.context)
+            binding.constraintLayoutEditNote.setBackgroundColor(color)
+            val colorSecond = it.getBackgroundColorVerticalLine(binding.root.context)
+            binding.ivVerticalLine.setBackgroundColor(colorSecond)
+            binding.btnSaveNote.setBackgroundColor(colorSecond)
         }
 
         editNoteViewModel.navigateBackEvent.observe(this.viewLifecycleOwner) {
@@ -93,13 +87,10 @@ class EditNoteFragment : Fragment() {
                     R.id.menuGrayishOrange -> {
                         binding.constraintLayoutEditNote.setBackgroundResource(R.color.grayish_orange)
                         binding.ivVerticalLine.setBackgroundResource(R.color.grayish_orange_line)
-                        context?.let {
-                            ContextCompat.getColor(
-                                it, R.color.grayish_orange_line
-                            )
-                        }?.let {
-                            binding.btnSaveNote.setBackgroundColor(it)
-                        }
+                        val color = ContextCompat.getColor(
+                            binding.root.context, R.color.grayish_orange_line
+                        )
+                        binding.btnSaveNote.setBackgroundColor(color)
                         editNoteViewModel.onColorChanged("2")
                         true
                     }
