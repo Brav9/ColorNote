@@ -3,7 +3,6 @@ package com.khalbro.colornote.presentation.allnotes
 import android.app.AlertDialog
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
@@ -12,20 +11,22 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import com.khalbro.colornote.R
 import com.khalbro.colornote.databinding.FragmentNotesBinding
 import com.khalbro.colornote.domain.models.InfoNote
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class NotesFragment : Fragment(), NotesAdapter.OnClickListener {
 
     private var _binding: FragmentNotesBinding? = null
     private val binding get() = _binding!!
-    private lateinit var notesViewModel: NotesViewModel
+    private val noteViewModel by viewModel<NotesViewModel>()
+//    private lateinit var notesViewModel: NotesViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -49,18 +50,17 @@ class NotesFragment : Fragment(), NotesAdapter.OnClickListener {
                     R.menu.menu_main -> {
                         true
                     }
-
                     else -> false
                 }
             }
         }, viewLifecycleOwner, Lifecycle.State.RESUMED)
 
-        notesViewModel = ViewModelProvider(this)[NotesViewModel::class.java]
+//        notesViewModel = ViewModelProvider(this)[NotesViewModel::class.java]
         Log.d("Ololo", "onViewCreated: 01")
 
         val adapter = NotesAdapter(this)
         binding.rvNotesFragment.adapter = adapter
-        notesViewModel.allNotes.observe(viewLifecycleOwner, Observer { notes ->
+        noteViewModel.allNotes.observe(viewLifecycleOwner, Observer { notes ->
             Log.d("Ololo", "observe: $notes")
             adapter.submitList(notes)
         })
@@ -96,7 +96,7 @@ class NotesFragment : Fragment(), NotesAdapter.OnClickListener {
             setTitle("Delete")
             setMessage("Do you want to delete this item?")
             setPositiveButton("Yes") { _, _ ->
-                infoNote.id?.let { notesViewModel.deleteNoteById(it) }
+                infoNote.id?.let { noteViewModel.deleteNoteById(it) }
             }
             setNegativeButton("No") { _, _ -> }
             val alert = alertBuilder.create()

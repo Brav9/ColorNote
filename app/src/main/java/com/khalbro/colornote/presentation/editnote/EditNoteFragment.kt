@@ -13,11 +13,11 @@ import androidx.core.view.MenuProvider
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.khalbro.colornote.R
 import com.khalbro.colornote.databinding.FragmentEditNoteBinding
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class EditNoteFragment : Fragment() {
 
@@ -28,7 +28,8 @@ class EditNoteFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_edit_note, container, false)
     }
 
-    private lateinit var editNoteViewModel: EditNoteViewModel
+    private val editNoteViewModel by viewModel<EditNoteViewModel>()
+//    private lateinit var editNoteViewModel: EditNoteViewModel
     private var fragmentNotesBinding: FragmentEditNoteBinding? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -39,7 +40,7 @@ class EditNoteFragment : Fragment() {
         val id = argsId.noteId
 
         fragmentNotesBinding = binding
-        editNoteViewModel = ViewModelProvider(this)[EditNoteViewModel::class.java]
+//        editNoteViewModel = ViewModelProvider(this)[EditNoteViewModel::class.java]
         editNoteViewModel.getNoteById(id).toString()
 
         editNoteViewModel.note.observe(this.viewLifecycleOwner) {
@@ -150,7 +151,6 @@ class EditNoteFragment : Fragment() {
                         editNoteViewModel.onColorChanged("3")
                         true
                     }
-
                     else -> false
                 }
             }

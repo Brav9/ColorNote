@@ -72,4 +72,7 @@ dependencies {
 
     //Slide To Act Library
     implementation 'com.ncorti:slidetoact:0.11.0'
+
+    // Koin
+    implementation "io.insert-koin:koin-android:3.3.3"
 }
