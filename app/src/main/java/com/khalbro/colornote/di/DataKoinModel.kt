@@ -7,8 +7,6 @@ import com.khalbro.colornote.domain.repository.InfoNoteRepository
 import org.koin.dsl.module
 
 val dataKoinModule = module {
-//    single { NotesRoomDatabase.getDatabase(get()) }
-//    single { get<NotesRoomDatabase>().notesDao() }
 
     single<NotesDao> {
         NotesRoomDatabase.getDatabase(get()).notesDao()

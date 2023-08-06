@@ -18,6 +18,7 @@ val viewModelKoinModel = module {
     viewModel<EditNoteViewModel> {
         EditNoteViewModel(
             application = get(),
+            state = get(),
             saveNoteUseCase = get(),
             getNoteByIdUseCase = get()
         )

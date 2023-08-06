@@ -14,17 +14,6 @@ class NotesViewModel(
     getAllNotesUseCase: GetAllNotesUseCase
 ) : AndroidViewModel(application) {
 
-//    @Deprecated("Use Koin")
-//    private val repository: InfoNoteRepository =
-//        InfoNoteRepositoryImpl(notesDao = NotesRoomDatabase.getDatabase(application).notesDao())
-
-//    private val deleteNoteUseCase by lazy(LazyThreadSafetyMode.NONE) {
-//        DeleteNoteUseCase(infoNoteRepository = repository)
-//    }
-
-//    private val getAllNotesUseCase = GetAllNotesUseCase(infoNoteRepository = repository)
-//    val allNotes = getAllNotesUseCase.invoke()
-
     val allNotes = getAllNotesUseCase.invoke()
 
     fun deleteNoteById(id: Long) = viewModelScope.launch(Dispatchers.IO) {

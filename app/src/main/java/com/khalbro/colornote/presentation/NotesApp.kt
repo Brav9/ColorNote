@@ -10,7 +10,7 @@ import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
 import org.koin.core.logger.Level
 
-class NotesApp: Application() {
+class NotesApp : Application() {
     override fun onCreate() {
         super.onCreate()
 
@@ -22,5 +22,9 @@ class NotesApp: Application() {
         }
     }
 
-    private fun provideModels() = listOf(useCaseKoinModel, dataKoinModule, viewModelKoinModel)
+    private fun provideModels() = listOf(
+        useCaseKoinModel,
+        dataKoinModule,
+        viewModelKoinModel
+    )
 }

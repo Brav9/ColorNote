@@ -29,7 +29,6 @@ class EditNoteFragment : Fragment() {
     }
 
     private val editNoteViewModel by viewModel<EditNoteViewModel>()
-//    private lateinit var editNoteViewModel: EditNoteViewModel
     private var fragmentNotesBinding: FragmentEditNoteBinding? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -40,10 +39,10 @@ class EditNoteFragment : Fragment() {
         val id = argsId.noteId
 
         fragmentNotesBinding = binding
-//        editNoteViewModel = ViewModelProvider(this)[EditNoteViewModel::class.java]
         editNoteViewModel.getNoteById(id).toString()
+        editNoteViewModel.note.value
+        editNoteViewModel.note.observe(viewLifecycleOwner) {
 
-        editNoteViewModel.note.observe(this.viewLifecycleOwner) {
             if (it.text != binding.etText.text.toString()) {
                 binding.etText.setText(it.text)
             }
@@ -55,7 +54,22 @@ class EditNoteFragment : Fragment() {
             val colorSecond = it.getBackgroundColorVerticalLine(binding.root.context)
             binding.ivVerticalLine.setBackgroundColor(colorSecond)
             binding.btnSaveNote.setBackgroundColor(colorSecond)
+
         }
+
+//        editNoteViewModel.note.observe(this.viewLifecycleOwner) {
+//            if (it.text != binding.etText.text.toString()) {
+//                binding.etText.setText(it.text)
+//            }
+//            if (it.title != binding.etTitle.text.toString()) {
+//                binding.etTitle.setText(it.title)
+//            }
+//            val color = it.getBackgroundColor(binding.root.context)
+//            binding.constraintLayoutEditNote.setBackgroundColor(color)
+//            val colorSecond = it.getBackgroundColorVerticalLine(binding.root.context)
+//            binding.ivVerticalLine.setBackgroundColor(colorSecond)
+//            binding.btnSaveNote.setBackgroundColor(colorSecond)
+//        }
 
         editNoteViewModel.navigateBackEvent.observe(this.viewLifecycleOwner) {
             findNavController().popBackStack()
@@ -72,7 +86,6 @@ class EditNoteFragment : Fragment() {
                 editNoteViewModel.onTitleChanged(it.toString())
             }
         }
-
 
         binding.btnSaveNote.setOnClickListener {
             editNoteViewModel.onSaveClick()
@@ -151,9 +164,23 @@ class EditNoteFragment : Fragment() {
                         editNoteViewModel.onColorChanged("3")
                         true
                     }
+
                     else -> false
                 }
             }
         }, viewLifecycleOwner, Lifecycle.State.RESUMED)
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        outState.apply {
+            putString("text", fragmentNotesBinding?.etText?.text.toString())
+            putString("title", fragmentNotesBinding?.etTitle?.text.toString())
+        }
+        super.onSaveInstanceState(outState)
+    }
+
+    override fun onDestroy() {
+        fragmentNotesBinding = null
+        super.onDestroy()
     }
 }

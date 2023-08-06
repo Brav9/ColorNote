@@ -1,6 +1,7 @@
 package com.khalbro.colornote.presentation.allnotes
 
 import android.app.AlertDialog
+import android.content.res.Configuration.ORIENTATION_LANDSCAPE
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -13,9 +14,9 @@ import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.khalbro.colornote.R
 import com.khalbro.colornote.databinding.FragmentNotesBinding
 import com.khalbro.colornote.domain.models.InfoNote
@@ -26,7 +27,6 @@ class NotesFragment : Fragment(), NotesAdapter.OnClickListener {
     private var _binding: FragmentNotesBinding? = null
     private val binding get() = _binding!!
     private val noteViewModel by viewModel<NotesViewModel>()
-//    private lateinit var notesViewModel: NotesViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -50,20 +50,26 @@ class NotesFragment : Fragment(), NotesAdapter.OnClickListener {
                     R.menu.menu_main -> {
                         true
                     }
+
                     else -> false
                 }
             }
         }, viewLifecycleOwner, Lifecycle.State.RESUMED)
-
-//        notesViewModel = ViewModelProvider(this)[NotesViewModel::class.java]
         Log.d("Ololo", "onViewCreated: 01")
 
         val adapter = NotesAdapter(this)
+
         binding.rvNotesFragment.adapter = adapter
-        noteViewModel.allNotes.observe(viewLifecycleOwner, Observer { notes ->
+        binding.rvNotesFragment.setHasFixedSize(true)
+        if (getOrientationLandScape()) {
+            binding.rvNotesFragment.layoutManager =
+                StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+        }
+
+        noteViewModel.allNotes.observe(viewLifecycleOwner) { notes ->
             Log.d("Ololo", "observe: $notes")
             adapter.submitList(notes)
-        })
+        }
 
         binding.fabNewNote.setOnClickListener {
             Navigation.findNavController(view)
@@ -88,6 +94,13 @@ class NotesFragment : Fragment(), NotesAdapter.OnClickListener {
 
     override fun onLongItemClick(infoNote: InfoNote) {
         deleteItem(infoNote)
+    }
+
+    private fun getOrientationLandScape(): Boolean {
+        return when (resources.configuration.orientation) {
+            ORIENTATION_LANDSCAPE -> true
+            else -> false
+        }
     }
 
     private fun deleteItem(infoNote: InfoNote) {
