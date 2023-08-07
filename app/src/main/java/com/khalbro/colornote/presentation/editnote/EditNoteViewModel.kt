@@ -15,10 +15,13 @@ import kotlinx.coroutines.withContext
 
 class EditNoteViewModel(
     application: Application,
-    private val state: SavedStateHandle,
+    savedStateHandle: SavedStateHandle,
     private val saveNoteUseCase: SaveNoteUseCase,
     private val getNoteByIdUseCase: GetNoteByIdUseCase
 ) : AndroidViewModel(application) {
+
+    private val argsId = EditNoteFragmentArgs.fromSavedStateHandle(savedStateHandle)
+    private val id = argsId.noteId
 
     private val _note: MutableLiveData<InfoNote> = MutableLiveData<InfoNote>()
     var note: LiveData<InfoNote> = _note
@@ -26,11 +29,15 @@ class EditNoteViewModel(
     private val _navigateBackEvent: MutableLiveData<Unit> = MutableLiveData<Unit>()
     var navigateBackEvent: LiveData<Unit> = _navigateBackEvent
 
+    init {
+        getNoteById(id).toString()
+    }
+
     private fun insertNote(note: InfoNote) = viewModelScope.launch(Dispatchers.IO) {
         saveNoteUseCase.invoke(note)
     }
 
-    fun getNoteById(id: Long) = viewModelScope.launch(Dispatchers.IO) {
+    private fun getNoteById(id: Long) = viewModelScope.launch(Dispatchers.IO) {
         val noteById = getNoteByIdUseCase.invoke(id)
         withContext(Dispatchers.Main) {
             noteById?.let {

@@ -9,8 +9,6 @@ import com.khalbro.colornote.domain.repository.InfoNoteRepository
 
 class InfoNoteRepositoryImpl(private val notesDao: NotesDao) : InfoNoteRepository {
 
-    val allNotes: LiveData<List<Note>> = notesDao.getAllNotes()
-
     override suspend fun saveInfoNote(saveInfoNote: InfoNote) {
         val note = Note(
             id = saveInfoNote.id,

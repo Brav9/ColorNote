@@ -14,7 +14,6 @@ import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import com.khalbro.colornote.R
 import com.khalbro.colornote.databinding.FragmentEditNoteBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -35,12 +34,8 @@ class EditNoteFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val binding = FragmentEditNoteBinding.bind(view)
         val menuHost: MenuHost = requireActivity()
-        val argsId: EditNoteFragmentArgs by navArgs()
-        val id = argsId.noteId
 
         fragmentNotesBinding = binding
-        editNoteViewModel.getNoteById(id).toString()
-        editNoteViewModel.note.value
         editNoteViewModel.note.observe(viewLifecycleOwner) {
 
             if (it.text != binding.etText.text.toString()) {
@@ -54,22 +49,7 @@ class EditNoteFragment : Fragment() {
             val colorSecond = it.getBackgroundColorVerticalLine(binding.root.context)
             binding.ivVerticalLine.setBackgroundColor(colorSecond)
             binding.btnSaveNote.setBackgroundColor(colorSecond)
-
         }
-
-//        editNoteViewModel.note.observe(this.viewLifecycleOwner) {
-//            if (it.text != binding.etText.text.toString()) {
-//                binding.etText.setText(it.text)
-//            }
-//            if (it.title != binding.etTitle.text.toString()) {
-//                binding.etTitle.setText(it.title)
-//            }
-//            val color = it.getBackgroundColor(binding.root.context)
-//            binding.constraintLayoutEditNote.setBackgroundColor(color)
-//            val colorSecond = it.getBackgroundColorVerticalLine(binding.root.context)
-//            binding.ivVerticalLine.setBackgroundColor(colorSecond)
-//            binding.btnSaveNote.setBackgroundColor(colorSecond)
-//        }
 
         editNoteViewModel.navigateBackEvent.observe(this.viewLifecycleOwner) {
             findNavController().popBackStack()
@@ -171,16 +151,8 @@ class EditNoteFragment : Fragment() {
         }, viewLifecycleOwner, Lifecycle.State.RESUMED)
     }
 
-    override fun onSaveInstanceState(outState: Bundle) {
-        outState.apply {
-            putString("text", fragmentNotesBinding?.etText?.text.toString())
-            putString("title", fragmentNotesBinding?.etTitle?.text.toString())
-        }
-        super.onSaveInstanceState(outState)
-    }
-
     override fun onDestroy() {
-        fragmentNotesBinding = null
         super.onDestroy()
+        fragmentNotesBinding = null
     }
 }
