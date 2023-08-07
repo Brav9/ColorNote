@@ -43,7 +43,7 @@ class EditNoteViewModel(
             noteById?.let {
                 _note.value = it
             } ?: run {
-                _note.value = InfoNote(text = "", title = "", id = null)
+                _note.value = InfoNote(text = "", title = "", id = null, date = 0)
             }
         }
     }

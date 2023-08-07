@@ -9,7 +9,8 @@ data class InfoNote(
     val text: String,
     val title: String,
     val id: Long?,
-    val color: String = randomColorBackground()
+    val color: String = randomColorBackground(),
+    val date: Long
 ) {
 
     fun getBackgroundColorVerticalLine(context: Context): Int {

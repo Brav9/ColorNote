@@ -14,7 +14,8 @@ class InfoNoteRepositoryImpl(private val notesDao: NotesDao) : InfoNoteRepositor
             id = saveInfoNote.id,
             title = saveInfoNote.title,
             text = saveInfoNote.text,
-            color = saveInfoNote.color
+            color = saveInfoNote.color,
+            date = saveInfoNote.date
         )
         notesDao.insertNote(note)
     }
@@ -30,7 +31,8 @@ class InfoNoteRepositoryImpl(private val notesDao: NotesDao) : InfoNoteRepositor
                     id = it.id,
                     text = it.text,
                     title = it.title,
-                    color = it.color
+                    color = it.color,
+                    date = it.date
                 )
             }
         }
@@ -42,7 +44,8 @@ class InfoNoteRepositoryImpl(private val notesDao: NotesDao) : InfoNoteRepositor
             id = getNote.id,
             text = getNote.text,
             title = getNote.title,
-            color = getNote.color
+            color = getNote.color,
+            date = getNote.date
         ) else null
     }
 }
