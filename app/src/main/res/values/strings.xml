@@ -14,5 +14,6 @@
     <string name="blue">blue</string>
     <string name="title">title note</string>
     <string name="text">text note</string>
+    <string name="btn_save">Save</string>
 
 </resources>

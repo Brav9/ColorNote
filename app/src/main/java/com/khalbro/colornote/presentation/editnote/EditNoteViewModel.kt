@@ -22,7 +22,6 @@ class EditNoteViewModel(
 
     private val argsId = EditNoteFragmentArgs.fromSavedStateHandle(savedStateHandle)
     private val id = argsId.noteId
-
     private val _note: MutableLiveData<InfoNote> = MutableLiveData<InfoNote>()
     var note: LiveData<InfoNote> = _note
 
@@ -30,7 +29,7 @@ class EditNoteViewModel(
     var navigateBackEvent: LiveData<Unit> = _navigateBackEvent
 
     init {
-        getNoteById(id).toString()
+        getNoteById(id)
     }
 
     private fun insertNote(note: InfoNote) = viewModelScope.launch(Dispatchers.IO) {
@@ -43,7 +42,8 @@ class EditNoteViewModel(
             noteById?.let {
                 _note.value = it
             } ?: run {
-                _note.value = InfoNote(text = "", title = "", id = null, date = 0)
+                _note.value =
+                    InfoNote(text = "", title = "", id = null, date = InfoNote.getDateNote())
             }
         }
     }
@@ -69,7 +69,7 @@ class EditNoteViewModel(
     fun onSaveClick() {
         val currentNote = note.value
         currentNote?.let {
-            insertNote(it)
+            insertNote(it.copy(date = InfoNote.getDateNote()))
             _navigateBackEvent.value = Unit
         }
     }

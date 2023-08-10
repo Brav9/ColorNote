@@ -1,5 +1,6 @@
 package com.khalbro.colornote.data.repository
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.map
 import com.khalbro.colornote.data.local.NotesDao
@@ -17,6 +18,7 @@ class InfoNoteRepositoryImpl(private val notesDao: NotesDao) : InfoNoteRepositor
             color = saveInfoNote.color,
             date = saveInfoNote.date
         )
+        Log.d("Ololo", "saveInfoNote:${note.date} ")
         notesDao.insertNote(note)
     }
 

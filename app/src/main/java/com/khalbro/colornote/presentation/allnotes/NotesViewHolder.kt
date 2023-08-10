@@ -22,6 +22,7 @@ class NotesViewHolder(private val binding: ItemNoteBinding) :
         Log.d("Ololo", "bind: $colorSecond)")
         binding.tvNoteText.text = item.text
         binding.tvNoteTitleText.text = item.title
+        binding.tvNoteDate.text = item.date?.let { item.convertLongToTime(it) }
 
         if (binding.tvNoteTitleText.text.isBlank())
             binding.tvNoteTitleText.visibility = View.GONE

@@ -14,6 +14,6 @@ data class Note(
     val title: String,
     @ColumnInfo(name = "color")
     val color: String,
-    @ColumnInfo(defaultValue = "0")
-    val date: Long
+    @ColumnInfo(name = "date")
+    val date: Long?
 )

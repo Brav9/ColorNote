@@ -20,6 +20,9 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class EditNoteFragment : Fragment() {
 
+    private val editNoteViewModel by viewModel<EditNoteViewModel>()
+    private var fragmentNotesBinding: FragmentEditNoteBinding? = null
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -27,14 +30,10 @@ class EditNoteFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_edit_note, container, false)
     }
 
-    private val editNoteViewModel by viewModel<EditNoteViewModel>()
-    private var fragmentNotesBinding: FragmentEditNoteBinding? = null
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val binding = FragmentEditNoteBinding.bind(view)
         val menuHost: MenuHost = requireActivity()
-
         fragmentNotesBinding = binding
         editNoteViewModel.note.observe(viewLifecycleOwner) {
 
@@ -44,11 +43,13 @@ class EditNoteFragment : Fragment() {
             if (it.title != binding.etTitle.text.toString()) {
                 binding.etTitle.setText(it.title)
             }
+
             val color = it.getBackgroundColor(binding.root.context)
             binding.constraintLayoutEditNote.setBackgroundColor(color)
             val colorSecond = it.getBackgroundColorVerticalLine(binding.root.context)
             binding.ivVerticalLine.setBackgroundColor(colorSecond)
             binding.btnSaveNote.setBackgroundColor(colorSecond)
+
         }
 
         editNoteViewModel.navigateBackEvent.observe(this.viewLifecycleOwner) {
@@ -68,6 +69,7 @@ class EditNoteFragment : Fragment() {
         }
 
         binding.btnSaveNote.setOnClickListener {
+
             editNoteViewModel.onSaveClick()
         }
 

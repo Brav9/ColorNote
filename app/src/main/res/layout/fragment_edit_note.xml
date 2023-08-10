@@ -27,22 +27,22 @@
                 android:id="@+id/ivVerticalLine"
                 android:layout_width="20dp"
                 android:layout_height="match_parent"
-                tools:background="@color/dark_grey"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:background="@color/dark_grey" />
 
             <EditText
-                android:hint="@string/title"
                 android:id="@+id/etTitle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
-                android:inputType="textMultiLine"
                 android:background="@null"
-                android:textSize="22sp"
+                android:hint="@string/title"
+                android:inputType="textMultiLine"
+                android:textSize="24sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toTopOf="@+id/etText"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -51,15 +51,15 @@
                 tools:text="ololololololololo" />
 
             <EditText
-                android:hint="@string/text"
                 android:id="@+id/etText"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="4dp"
                 android:layout_marginEnd="16dp"
                 android:background="@null"
                 android:gravity="start|top"
+                android:hint="@string/text"
                 android:inputType="textMultiLine"
                 android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -79,11 +79,11 @@
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
-        tools:backgroundTint="@color/dark_grey"
-        android:text="Save"
+        android:text="@string/btn_save"
         app:cornerRadius="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        tools:backgroundTint="@color/dark_grey" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

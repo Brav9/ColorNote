@@ -31,11 +31,9 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="4dp"
             android:layout_marginEnd="16dp"
-            android:layout_marginBottom="8dp"
             android:textSize="18sp"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/ivVerticalLineNote"
             app:layout_constraintTop_toBottomOf="@+id/tvNoteTitleText"
@@ -48,11 +46,22 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
-            android:textSize="22sp"
+            android:textSize="24sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/ivVerticalLineNote"
             app:layout_constraintTop_toTopOf="parent"
+            tools:text="ololololo" />
+
+        <TextView
+            android:id="@+id/tvNoteDate"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/tvNoteText"
+            app:layout_constraintTop_toBottomOf="@+id/tvNoteText"
             tools:text="ololololo" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
