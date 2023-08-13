@@ -29,7 +29,6 @@ abstract class NotesRoomDatabase : RoomDatabase() {
                     "notes_database"
                 )
                     .addMigrations(MIGRATION_1_2)
-                    .allowMainThreadQueries()
                     .build()
                 INSTANCE = instance
                 instance
@@ -40,6 +39,6 @@ abstract class NotesRoomDatabase : RoomDatabase() {
 
 val MIGRATION_1_2: Migration = object : Migration(1, 2) {
     override fun migrate(database: SupportSQLiteDatabase) {
-        database.execSQL("ALTER TABLE notes ADD COLUMN date INTEGER DEFAULT 0")
+        database.execSQL("ALTER TABLE notes ADD COLUMN date INTEGER")
     }
 }

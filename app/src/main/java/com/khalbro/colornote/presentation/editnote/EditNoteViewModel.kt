@@ -13,6 +13,11 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
+sealed interface InfoNoteState {
+    object Loading : InfoNoteState
+    data class Success(val infoNote: InfoNote) : InfoNoteState
+}
+
 class EditNoteViewModel(
     application: Application,
     savedStateHandle: SavedStateHandle,
@@ -22,8 +27,9 @@ class EditNoteViewModel(
 
     private val argsId = EditNoteFragmentArgs.fromSavedStateHandle(savedStateHandle)
     private val id = argsId.noteId
-    private val _note: MutableLiveData<InfoNote> = MutableLiveData<InfoNote>()
-    var note: LiveData<InfoNote> = _note
+
+    private val _state: MutableLiveData<InfoNoteState> = MutableLiveData<InfoNoteState>()
+    var state: LiveData<InfoNoteState> = _state
 
     private val _navigateBackEvent: MutableLiveData<Unit> = MutableLiveData<Unit>()
     var navigateBackEvent: LiveData<Unit> = _navigateBackEvent
@@ -37,49 +43,49 @@ class EditNoteViewModel(
     }
 
     private fun getNoteById(id: Long) = viewModelScope.launch(Dispatchers.IO) {
+//        _state.postValue(InfoNoteState.Loading)
+        withContext(Dispatchers.Main) { _state.value = InfoNoteState.Loading }
         val noteById = getNoteByIdUseCase.invoke(id)
         withContext(Dispatchers.Main) {
+
             noteById?.let {
-                _note.value = it
+                _state.value = InfoNoteState.Success(it)
             } ?: run {
-                _note.value =
-                    InfoNote(text = "", title = "", id = null, date = InfoNote.getDateNote())
+                _state.value = InfoNoteState.Success(
+                    InfoNote(
+                        text = "",
+                        title = "",
+                        id = null,
+                        date = InfoNote.getDateNote()
+                    )
+                )
             }
         }
     }
 
     fun onTextChanged(text: String) {
-        val currentNote = note.value
-        currentNote?.let {
-            if (currentNote.text != text) {
-                _note.value = currentNote.copy(text = text)
-            }
-        }
+        val currentState = state.value
+        if (currentState !is InfoNoteState.Success) return
+        _state.value = currentState.copy(infoNote = currentState.infoNote.copy(text = text))
     }
 
     fun onTitleChanged(text: String) {
-        val currentNote = note.value
-        currentNote?.let {
-            if (currentNote.title != text) {
-                _note.value = currentNote.copy(title = text)
-            }
-        }
+        val currentState = state.value
+        if (currentState !is InfoNoteState.Success) return
+        _state.value = currentState.copy(infoNote = currentState.infoNote.copy(title = text))
     }
 
     fun onSaveClick() {
-        val currentNote = note.value
-        currentNote?.let {
-            insertNote(it.copy(date = InfoNote.getDateNote()))
-            _navigateBackEvent.value = Unit
-        }
+        val currentState = state.value
+        if (currentState !is InfoNoteState.Success) return
+        insertNote(currentState.infoNote.copy(date = InfoNote.getDateNote()))
+        _navigateBackEvent.value = Unit
     }
 
     fun onColorChanged(color: String) {
-        val currentNote = note.value
-        currentNote?.let {
-            if (currentNote.color != color) {
-                _note.value = currentNote.copy(color = color)
-            }
-        }
+        val currentState = state.value
+        if (currentState !is InfoNoteState.Success) return
+        _state.value = currentState.copy(infoNote = currentState.infoNote.copy(color = color))
     }
 }
+

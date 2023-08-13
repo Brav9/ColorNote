@@ -35,21 +35,32 @@ class EditNoteFragment : Fragment() {
         val binding = FragmentEditNoteBinding.bind(view)
         val menuHost: MenuHost = requireActivity()
         fragmentNotesBinding = binding
-        editNoteViewModel.note.observe(viewLifecycleOwner) {
 
-            if (it.text != binding.etText.text.toString()) {
-                binding.etText.setText(it.text)
+        editNoteViewModel.state.observe(viewLifecycleOwner) { state ->
+            when (state) {
+                is InfoNoteState.Loading -> {
+                    binding.materialCardView.visibility = View.INVISIBLE
+                    binding.btnSaveNote.visibility = View.INVISIBLE
+                }
+
+                is InfoNoteState.Success -> {
+                    binding.materialCardView.visibility = View.VISIBLE
+                    binding.btnSaveNote.visibility = View.VISIBLE
+
+                    if (state.infoNote.text != binding.etText.text.toString()) {
+                        binding.etText.setText(state.infoNote.text)
+                    }
+                    if (state.infoNote.title != binding.etTitle.text.toString()) {
+                        binding.etTitle.setText(state.infoNote.title)
+                    }
+                    val color = state.infoNote.getBackgroundColor(binding.root.context)
+                    binding.constraintLayoutEditNote.setBackgroundColor(color)
+                    val colorSecond =
+                        state.infoNote.getBackgroundColorVerticalLine(binding.root.context)
+                    binding.ivVerticalLine.setBackgroundColor(colorSecond)
+                    binding.btnSaveNote.setBackgroundColor(colorSecond)
+                }
             }
-            if (it.title != binding.etTitle.text.toString()) {
-                binding.etTitle.setText(it.title)
-            }
-
-            val color = it.getBackgroundColor(binding.root.context)
-            binding.constraintLayoutEditNote.setBackgroundColor(color)
-            val colorSecond = it.getBackgroundColorVerticalLine(binding.root.context)
-            binding.ivVerticalLine.setBackgroundColor(colorSecond)
-            binding.btnSaveNote.setBackgroundColor(colorSecond)
-
         }
 
         editNoteViewModel.navigateBackEvent.observe(this.viewLifecycleOwner) {
