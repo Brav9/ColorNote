@@ -19,4 +19,9 @@ class NotesViewModel(
     fun deleteNoteById(id: Long) = viewModelScope.launch(Dispatchers.IO) {
         deleteNoteUseCase.invoke(id)
     }
+    fun sortingNotesByDate(){
+        allNotes
+    }
+
+    fun sortingNotesByTitle(){}
 }

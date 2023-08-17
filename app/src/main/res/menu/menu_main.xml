@@ -5,22 +5,34 @@
     tools:context=".presentation.MainActivity">
     <item
         android:id="@+id/menuColorProfile"
+        android:icon="@drawable/baseline_notes_24"
         android:orderInCategory="100"
         android:title="@string/action_color_profile"
+        app:showAsAction="ifRoom">
 
-        app:showAsAction="never">
         <menu>
             <item
-                android:id="@+id/menuGray"
+                android:id="@+id/menuSortingByDate"
                 android:orderInCategory="100"
-                android:title="@string/warm"
+                android:title="@string/sorting_by_date"
                 app:showAsAction="never" />
             <item
-                android:id="@+id/menuCold"
+                android:id="@+id/menuSortingByTitle"
                 android:orderInCategory="100"
-                android:title="@string/cold"
+                android:title="@string/sorting_by_title"
                 app:showAsAction="never" />
         </menu>
+    </item>
+
+
+    <item
+        android:id="@+id/menuDirectionOfSorting"
+        android:icon="@drawable/baseline_arrow_downward_24"
+        android:orderInCategory="100"
+        android:title="TODO"
+
+        app:showAsAction="ifRoom">
+
     </item>
 
 </menu>

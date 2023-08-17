@@ -4,8 +4,8 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <!--   Menu-->
     <string name="action_color_profile">color profile</string>
-    <string name="warm">warm</string>
-    <string name="cold">cold</string>
+    <string name="sorting_by_date">date of creation</string>
+    <string name="sorting_by_title">title</string>
 
     <string name="gray">gray</string>
     <string name="grayish_orange">grayish orange</string>

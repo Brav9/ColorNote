@@ -28,10 +28,12 @@ class NotesFragment : Fragment(), NotesAdapter.OnClickListener {
     private val binding get() = _binding!!
     private val noteViewModel by viewModel<NotesViewModel>()
 
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         Log.d("Ololo", "onCreateView: $inflater")
         _binding = FragmentNotesBinding.inflate(inflater, container, false)
         return binding.root
@@ -40,6 +42,8 @@ class NotesFragment : Fragment(), NotesAdapter.OnClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val menuHost: MenuHost = requireActivity()
+        var isClicked: Boolean
+
         menuHost.addMenuProvider(object : MenuProvider {
             override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
                 menuInflater.inflate(R.menu.menu_main, menu)
@@ -47,7 +51,25 @@ class NotesFragment : Fragment(), NotesAdapter.OnClickListener {
 
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
                 return when (menuItem.itemId) {
-                    R.menu.menu_main -> {
+                    R.id.menuSortingByDate -> {
+                        true
+                    }
+
+                    R.id.menuSortingByDate -> {
+                        true
+                    }
+
+                    R.id.menuDirectionOfSorting -> {
+                        isClicked = true
+                        if (!isClicked){
+                            menuItem.setIcon(R.drawable.baseline_arrow_downward_24)
+
+                        } else menuItem.setIcon(R.drawable.baseline_arrow_upward_24)
+                        isClicked = false
+
+//                        if (menuItem.itemId == R.id.menuDirectionOfSorting) {
+//                            menuItem.setIcon(R.drawable.baseline_arrow_upward_24)
+//                        } else menuItem.setIcon(R.drawable.baseline_arrow_downward_24)
                         true
                     }
 
