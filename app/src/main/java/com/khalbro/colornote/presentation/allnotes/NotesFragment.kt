@@ -22,12 +22,19 @@ import com.khalbro.colornote.databinding.FragmentNotesBinding
 import com.khalbro.colornote.domain.models.InfoNote
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
+enum class SortType {
+    SORT_DATE, SORT_TITLE
+}
+
+enum class SortDirection {
+    ASCENDING_SORT, DESCENDING_SORT
+}
+
 class NotesFragment : Fragment(), NotesAdapter.OnClickListener {
 
     private var _binding: FragmentNotesBinding? = null
     private val binding get() = _binding!!
     private val noteViewModel by viewModel<NotesViewModel>()
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -42,7 +49,7 @@ class NotesFragment : Fragment(), NotesAdapter.OnClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val menuHost: MenuHost = requireActivity()
-        var isClicked: Boolean
+        var isClicked: Boolean = true
 
         menuHost.addMenuProvider(object : MenuProvider {
             override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
@@ -52,24 +59,25 @@ class NotesFragment : Fragment(), NotesAdapter.OnClickListener {
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
                 return when (menuItem.itemId) {
                     R.id.menuSortingByDate -> {
+                        noteViewModel.onSortChange(SortType.SORT_DATE)
                         true
                     }
 
-                    R.id.menuSortingByDate -> {
+                    R.id.menuSortingByTitle -> {
+                        noteViewModel.onSortChange(SortType.SORT_TITLE)
                         true
                     }
 
                     R.id.menuDirectionOfSorting -> {
-                        isClicked = true
-                        if (!isClicked){
+                        isClicked = if (isClicked) {
+                            noteViewModel.onSortDirectionChange(SortDirection.DESCENDING_SORT)
                             menuItem.setIcon(R.drawable.baseline_arrow_downward_24)
-
-                        } else menuItem.setIcon(R.drawable.baseline_arrow_upward_24)
-                        isClicked = false
-
-//                        if (menuItem.itemId == R.id.menuDirectionOfSorting) {
-//                            menuItem.setIcon(R.drawable.baseline_arrow_upward_24)
-//                        } else menuItem.setIcon(R.drawable.baseline_arrow_downward_24)
+                            false
+                        } else {
+                            noteViewModel.onSortDirectionChange(SortDirection.ASCENDING_SORT)
+                            menuItem.setIcon(R.drawable.baseline_arrow_upward_24)
+                            true
+                        }
                         true
                     }
 
@@ -88,9 +96,8 @@ class NotesFragment : Fragment(), NotesAdapter.OnClickListener {
                 StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         }
 
-        noteViewModel.allNotes.observe(viewLifecycleOwner) { notes ->
-            Log.d("Ololo", "observe: $notes")
-            adapter.submitList(notes)
+        noteViewModel.allNotes.observe(viewLifecycleOwner) {
+            adapter.submitList(it)
         }
 
         binding.fabNewNote.setOnClickListener {
