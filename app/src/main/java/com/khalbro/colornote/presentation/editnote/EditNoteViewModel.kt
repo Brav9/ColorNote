@@ -1,10 +1,9 @@
 package com.khalbro.colornote.presentation.editnote
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.khalbro.colornote.domain.models.InfoNote
 import com.khalbro.colornote.domain.usecase.GetNoteByIdUseCase
@@ -19,11 +18,10 @@ sealed interface InfoNoteState {
 }
 
 class EditNoteViewModel(
-    application: Application,
     savedStateHandle: SavedStateHandle,
     private val saveNoteUseCase: SaveNoteUseCase,
     private val getNoteByIdUseCase: GetNoteByIdUseCase
-) : AndroidViewModel(application) {
+) : ViewModel() {
 
     private val argsId = EditNoteFragmentArgs.fromSavedStateHandle(savedStateHandle)
     private val id = argsId.noteId

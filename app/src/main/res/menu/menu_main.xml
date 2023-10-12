@@ -25,10 +25,8 @@
     </item>
     <item
         android:id="@+id/menuDirectionOfSorting"
-        android:icon="@drawable/baseline_arrow_downward_24"
         android:orderInCategory="100"
-        android:title="TODO"
-
+        android:title=""
         app:showAsAction="ifRoom">
 
     </item>

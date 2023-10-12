@@ -17,17 +17,29 @@ import androidx.lifecycle.Lifecycle
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import androidx.room.ProvidedTypeConverter
+import androidx.room.TypeConverter
 import com.khalbro.colornote.R
 import com.khalbro.colornote.databinding.FragmentNotesBinding
 import com.khalbro.colornote.domain.models.InfoNote
+import com.khalbro.colornote.domain.models.SortDirection
+import com.khalbro.colornote.domain.models.SortType
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-enum class SortType {
-    SORT_DATE, SORT_TITLE
-}
 
-enum class SortDirection {
-    ASCENDING_SORT, DESCENDING_SORT
+@ProvidedTypeConverter
+class SortNotesConverter {
+    @TypeConverter
+    fun toSortTypeNotes(value: String): SortType = enumValueOf(value)
+
+    @TypeConverter
+    fun toSortDirectionNotes(value: String): SortDirection = enumValueOf(value)
+
+    @TypeConverter
+    fun fromSortTypeNotes(value: SortType) = value.name
+
+    @TypeConverter
+    fun fromSortDirectionNotes(value: SortDirection) = value.name
 }
 
 class NotesFragment : Fragment(), NotesAdapter.OnClickListener {
@@ -35,6 +47,7 @@ class NotesFragment : Fragment(), NotesAdapter.OnClickListener {
     private var _binding: FragmentNotesBinding? = null
     private val binding get() = _binding!!
     private val noteViewModel by viewModel<NotesViewModel>()
+    private var menu: Menu? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -48,43 +61,7 @@ class NotesFragment : Fragment(), NotesAdapter.OnClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val menuHost: MenuHost = requireActivity()
-        var isClicked: Boolean = true
-
-        menuHost.addMenuProvider(object : MenuProvider {
-            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
-                menuInflater.inflate(R.menu.menu_main, menu)
-            }
-
-            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-                return when (menuItem.itemId) {
-                    R.id.menuSortingByDate -> {
-                        noteViewModel.onSortChange(SortType.SORT_DATE)
-                        true
-                    }
-
-                    R.id.menuSortingByTitle -> {
-                        noteViewModel.onSortChange(SortType.SORT_TITLE)
-                        true
-                    }
-
-                    R.id.menuDirectionOfSorting -> {
-                        isClicked = if (isClicked) {
-                            noteViewModel.onSortDirectionChange(SortDirection.DESCENDING_SORT)
-                            menuItem.setIcon(R.drawable.baseline_arrow_downward_24)
-                            false
-                        } else {
-                            noteViewModel.onSortDirectionChange(SortDirection.ASCENDING_SORT)
-                            menuItem.setIcon(R.drawable.baseline_arrow_upward_24)
-                            true
-                        }
-                        true
-                    }
-
-                    else -> false
-                }
-            }
-        }, viewLifecycleOwner, Lifecycle.State.RESUMED)
+        setupMenu()
         Log.d("Ololo", "onViewCreated: 01")
 
         val adapter = NotesAdapter(this)
@@ -100,10 +77,62 @@ class NotesFragment : Fragment(), NotesAdapter.OnClickListener {
             adapter.submitList(it)
         }
 
+
         binding.fabNewNote.setOnClickListener {
             Navigation.findNavController(view)
                 .navigate(R.id.action_notesFragment_to_editNoteFragment)
             Log.d("Ololo", "fabNewNote: $view")
+        }
+    }
+
+    private fun setupMenu(){
+        val menuHost: MenuHost = requireActivity()
+        menuHost.addMenuProvider(object : MenuProvider {
+            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+
+                menuInflater.inflate(R.menu.menu_main, menu)
+                this@NotesFragment.menu = menu
+
+                noteViewModel.sortDirection.observe(viewLifecycleOwner) {
+                    onSortDirectionChanged(it)
+                }
+            }
+
+
+            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                return when (menuItem.itemId) {
+                    R.id.menuSortingByDate -> {
+                        noteViewModel.changeSortTypeNotes(SortType.SORT_DATE)
+                        true
+                    }
+
+                    R.id.menuSortingByTitle -> {
+                        noteViewModel.changeSortTypeNotes(SortType.SORT_TITLE)
+                        true
+                    }
+
+                    R.id.menuDirectionOfSorting -> {
+                        noteViewModel.changeSortDirectionNotes()
+                        false
+                    }
+
+                    else -> false
+                }
+            }
+        }, viewLifecycleOwner, Lifecycle.State.RESUMED)
+
+
+    }
+
+    private fun onSortDirectionChanged(sortDirection: SortDirection?) {
+        Log.d("Ololo", "onSortDirectionChanged:$menu ")
+        menu?.findItem(R.id.menuDirectionOfSorting)?.apply {
+            val icon = when (sortDirection) {
+                SortDirection.ASCENDING_SORT -> R.drawable.baseline_arrow_downward_24
+                SortDirection.DESCENDING_SORT -> R.drawable.baseline_arrow_upward_24
+                null -> R.drawable.baseline_notes_24
+            }
+            setIcon(icon)
         }
     }
 
