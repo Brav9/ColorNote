@@ -12,7 +12,6 @@ val viewModelKoinModel = module {
         NotesViewModel(
             getSelectedSortDirectionUseCase = get(),
             deleteNoteUseCase = get(),
-            getAllNotesUseCase = get(),
             changeSortTypeNotesUseCase = get(),
             changeSortDirectionUseCase = get(),
             getSortedNotesUseCase = get()
@@ -21,7 +20,6 @@ val viewModelKoinModel = module {
 
     viewModel<EditNoteViewModel> {
         EditNoteViewModel(
-
             savedStateHandle = get(),
             saveNoteUseCase = get(),
             getNoteByIdUseCase = get()
@@ -29,10 +27,7 @@ val viewModelKoinModel = module {
     }
     viewModel<MainViewModel> {
         MainViewModel(
-
-            changeSortTypeNotesUseCase = get(),
-            changeSortDirectionNotesUseCase = get()
-//            isSortTableEmptyUseCase = get()
+            fillDatabaseWithDefaultValuesUseCase = get()
         )
     }
 }

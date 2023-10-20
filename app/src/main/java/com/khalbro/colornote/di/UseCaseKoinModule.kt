@@ -3,6 +3,7 @@ package com.khalbro.colornote.di
 import com.khalbro.colornote.domain.usecase.ChangeSortDirectionNotesUseCase
 import com.khalbro.colornote.domain.usecase.ChangeSortTypeNotesUseCase
 import com.khalbro.colornote.domain.usecase.DeleteNoteUseCase
+import com.khalbro.colornote.domain.usecase.FillDatabaseWithDefaultValuesUseCase
 import com.khalbro.colornote.domain.usecase.GetAllNotesUseCase
 import com.khalbro.colornote.domain.usecase.GetNoteByIdUseCase
 import com.khalbro.colornote.domain.usecase.GetSelectedSortDirectionUseCase
@@ -50,5 +51,9 @@ val useCaseKoinModel = module {
 
     factory<GetSelectedSortDirectionUseCase> {
         GetSelectedSortDirectionUseCase(sortNotesRepository = get())
+    }
+
+    factory<FillDatabaseWithDefaultValuesUseCase> {
+        FillDatabaseWithDefaultValuesUseCase(sortNotesRepository = get())
     }
 }

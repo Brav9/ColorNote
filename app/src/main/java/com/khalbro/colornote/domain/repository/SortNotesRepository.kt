@@ -1,19 +1,21 @@
 package com.khalbro.colornote.domain.repository
 
 import androidx.lifecycle.LiveData
-import com.khalbro.colornote.data.local.entity.SelectedSortDirection
+import com.khalbro.colornote.domain.models.SortDirection
 import com.khalbro.colornote.domain.models.SortType
 
 interface SortNotesRepository {
 
-    fun getSelectedSortDirection(): LiveData<SelectedSortDirection>
+    fun getSelectedSortDirection(): LiveData<SortDirection>
 
-    suspend fun getSelectedSortDirectionSuspend(): SelectedSortDirection?
+    suspend fun getSelectedSortDirectionSuspend(): SortDirection?
+
+    suspend fun getSelectedSortTypeSuspend(): SortType?
 
     fun getSelectedSortType(): LiveData<SortType>
 
     suspend fun changeSortTypeNotes(sortTypeNotes: SortType)
 
-    suspend fun changeSortDirectionNotes(sortDirectionNotes: SelectedSortDirection)
+    suspend fun changeSortDirectionNotes(sortDirectionNotes: SortDirection)
 
 }

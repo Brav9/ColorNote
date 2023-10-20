@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.khalbro.colornote.R
-import com.khalbro.colornote.domain.models.SortType
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity(R.layout.activity_main) {
@@ -18,12 +17,10 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         val navHostFragment = supportFragmentManager
             .findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         navController = navHostFragment.navController
-        fieldDatabaseWithDefaultValues()
+        fillDatabaseWithDefaultValues()
     }
 
-
-    private fun fieldDatabaseWithDefaultValues() {
-        mainViewModel.changeSortTypeNotes(SortType.SORT_TITLE)
-        mainViewModel.changeSortDirectionNotes()
+    private fun fillDatabaseWithDefaultValues() {
+        mainViewModel.fillDatabaseWithDefaultValues()
     }
 }

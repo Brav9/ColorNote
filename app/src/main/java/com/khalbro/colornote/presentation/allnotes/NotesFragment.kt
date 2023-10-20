@@ -98,7 +98,6 @@ class NotesFragment : Fragment(), NotesAdapter.OnClickListener {
                 }
             }
 
-
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
                 return when (menuItem.itemId) {
                     R.id.menuSortingByDate -> {
@@ -120,7 +119,6 @@ class NotesFragment : Fragment(), NotesAdapter.OnClickListener {
                 }
             }
         }, viewLifecycleOwner, Lifecycle.State.RESUMED)
-
 
     }
 

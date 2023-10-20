@@ -39,8 +39,8 @@ class GetSortedNotesUseCase(
 
             SortType.SORT_TITLE -> {
                 when (sortDirection) {
-                    SortDirection.DESCENDING_SORT -> notes.sortedByDescending { it.title }
-                    SortDirection.ASCENDING_SORT -> notes.sortedBy { it.title }
+                    SortDirection.DESCENDING_SORT -> notes.sortedByDescending { it.title.lowercase()}
+                    SortDirection.ASCENDING_SORT -> notes.sortedBy { it.title.lowercase() }
                 }
             }
         }

@@ -1,40 +1,63 @@
 package com.khalbro.colornote.data.repository
 
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.map
-import com.khalbro.colornote.data.local.SelectedSortDirectionDao
-import com.khalbro.colornote.data.local.SelectedSortTypeDao
-import com.khalbro.colornote.data.local.entity.SelectedSortDirection
-import com.khalbro.colornote.data.local.entity.SelectedSortType
+import androidx.lifecycle.asLiveData
+import com.khalbro.colornote.domain.models.SortDirection
 import com.khalbro.colornote.domain.models.SortType
 import com.khalbro.colornote.domain.repository.SortNotesRepository
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.map
 
 class SelectedSortNotesRepositoryImpl(
-    private val selectedSortTypeDao: SelectedSortTypeDao,
-    private val selectedSortDirectionDao: SelectedSortDirectionDao
+    private val dataStore: DataStore<Preferences>
 ) : SortNotesRepository {
 
-    override   fun getSelectedSortDirection(): LiveData<SelectedSortDirection> {
-        return selectedSortDirectionDao.getSortDirection()
+    private val SORT_DIRECTION = stringPreferencesKey("SORT_DIRECTION")
+    private val SORT_TYPE = stringPreferencesKey("SORT_TYPE")
+
+    override fun getSelectedSortDirection(): LiveData<SortDirection> {
+        return dataStore.data.map { preferences ->
+            val value: String = preferences[SORT_DIRECTION] ?: SortDirection.ASCENDING_SORT.name
+            SortDirection.valueOf(value)
+        }.asLiveData()
     }
 
-    override suspend fun getSelectedSortDirectionSuspend(): SelectedSortDirection? {
-       return  selectedSortDirectionDao.getSortDirectionSuspend()
-    }
-
-    override  fun getSelectedSortType(): LiveData<SortType> {
-        return selectedSortTypeDao.getSortType().map {
-            it.sortType
+    override suspend fun getSelectedSortDirectionSuspend(): SortDirection? {
+        return dataStore.data.first().let { preferences ->
+            val value: String = preferences[SORT_DIRECTION] ?: return null
+            SortDirection.valueOf(value)
         }
     }
 
-    override suspend fun changeSortTypeNotes(sortTypeNotes: SortType) {
-        val sortType = SelectedSortType(sortType = sortTypeNotes)
-        selectedSortTypeDao.insertSortType(sortType)
+    override suspend fun getSelectedSortTypeSuspend(): SortType? {
+        return dataStore.data.first().let { preferences ->
+            val value: String = preferences[SORT_TYPE] ?: return null
+            SortType.valueOf(value)
+        }
     }
 
-    override suspend fun changeSortDirectionNotes(sortDirectionNotes: SelectedSortDirection) {
-        selectedSortDirectionDao.insertSortDirection(sortDirectionNotes)
+    override fun getSelectedSortType(): LiveData<SortType> {
+        return dataStore.data.map { preferences ->
+            val value: String = preferences[SORT_TYPE] ?: SortType.SORT_DATE.name
+            SortType.valueOf(value)
+        }.asLiveData()
+    }
+
+    override suspend fun changeSortTypeNotes(sortTypeNotes: SortType) {
+        dataStore.edit { settings ->
+            settings[SORT_TYPE] = sortTypeNotes.name
+        }
+    }
+
+    override suspend fun changeSortDirectionNotes(sortDirectionNotes: SortDirection) {
+
+        dataStore.edit { settings ->
+            settings[SORT_DIRECTION] = sortDirectionNotes.name
+        }
     }
 }
 

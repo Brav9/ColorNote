@@ -41,7 +41,6 @@ class EditNoteViewModel(
     }
 
     private fun getNoteById(id: Long) = viewModelScope.launch(Dispatchers.IO) {
-//        _state.postValue(InfoNoteState.Loading)
         withContext(Dispatchers.Main) { _state.value = InfoNoteState.Loading }
         val noteById = getNoteByIdUseCase.invoke(id)
         withContext(Dispatchers.Main) {

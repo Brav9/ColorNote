@@ -14,5 +14,8 @@ interface SelectedSortTypeDao {
     suspend fun insertSortType(selectedSortType: SelectedSortType)
 
     @Query("SELECT * from selected_sort_type")
-     fun getSortType(): LiveData<SelectedSortType>
+    fun getSortType(): LiveData<SelectedSortType>
+
+    @Query("SELECT * from selected_sort_type")
+    suspend fun getSortTypeSuspend(): SelectedSortType?
 }
