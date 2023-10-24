@@ -17,30 +17,12 @@ import androidx.lifecycle.Lifecycle
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import androidx.room.ProvidedTypeConverter
-import androidx.room.TypeConverter
 import com.khalbro.colornote.R
 import com.khalbro.colornote.databinding.FragmentNotesBinding
 import com.khalbro.colornote.domain.models.InfoNote
 import com.khalbro.colornote.domain.models.SortDirection
 import com.khalbro.colornote.domain.models.SortType
 import org.koin.androidx.viewmodel.ext.android.viewModel
-
-
-@ProvidedTypeConverter
-class SortNotesConverter {
-    @TypeConverter
-    fun toSortTypeNotes(value: String): SortType = enumValueOf(value)
-
-    @TypeConverter
-    fun toSortDirectionNotes(value: String): SortDirection = enumValueOf(value)
-
-    @TypeConverter
-    fun fromSortTypeNotes(value: SortType) = value.name
-
-    @TypeConverter
-    fun fromSortDirectionNotes(value: SortDirection) = value.name
-}
 
 class NotesFragment : Fragment(), NotesAdapter.OnClickListener {
 

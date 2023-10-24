@@ -9,7 +9,7 @@ import com.khalbro.colornote.domain.models.InfoNote
 import com.khalbro.colornote.domain.repository.InfoNoteRepository
 
 class InfoNoteRepositoryImpl(
-    private val notesDao: NotesDao,
+    private val notesDao: NotesDao
 ) : InfoNoteRepository {
 
     override suspend fun saveInfoNote(saveInfoNote: InfoNote) {
